@@ -19,14 +19,15 @@ io.on("connection", (socket) => {
     // transmet l'id lors d'une connection
     console.log(`User connected : ${socket.id}`);
 
-    // Me permet de rejoindre un groupe/chaine
-    socket.on("join_room", (data) => {
-        socket.join(data);
-    });
-
     // Me permet de récupérer les messages du client
     socket.on("send_message", (data) => {
-        socket.to(data.room).emit("receive_message", data)
+      console.log(data);
+      socket.emit("receive_message", data)
+    });
+
+    socket.on('disconnect', () => {
+      console.log('A user disconnected');
+      socket.disconnect();
     });
 });
 
